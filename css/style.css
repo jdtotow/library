@@ -1,0 +1,29 @@
+h1,h2{
+	color: grey;
+}
+#title_connexion{
+	text-align: center;
+}
+#box_connexion{
+	position: relative;
+	width: 400px;
+	height: 300px;
+	margin: auto;
+	padding: 10px;
+}
+.inputspace{
+	margin-top: 20px;
+}
+.horiz{
+	float: right;
+}
+.mcenter{
+	margin: 0 auto;
+}
+.home{
+	background-image: url(../images/background.jpg);
+	background-repeat: repeat-x;
+}
+.logo{
+	margin-top: -15px;
+}
