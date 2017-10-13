@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Ven 25 Août 2017 à 15:12
+-- Généré le :  Ven 13 Octobre 2017 à 12:51
 -- Version du serveur :  5.7.19-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.16.04.1
 
@@ -37,7 +37,9 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`B_ISBN`, `B_title`, `B_authors`) VALUES
+('1-21091-776-6', 'C programming', 'D. Kyriazi'),
 ('3-49485-696-8', 'Statictics', 'MF'),
+('5-52323-958-2', 'Analyse 2', 'MF'),
 ('8-61901-940-2', 'Web programming 2', 'D.Kyriazi');
 
 -- --------------------------------------------------------
@@ -58,7 +60,9 @@ CREATE TABLE `copies` (
 
 INSERT INTO `copies` (`C_id`, `B_ISBN`, `C_number`) VALUES
 (1, '3-49485-696-8', 2),
-(2, '8-61901-940-2', 10);
+(2, '8-61901-940-2', 13),
+(3, '1-21091-776-6', 18),
+(4, '5-52323-958-2', 4);
 
 -- --------------------------------------------------------
 
@@ -100,8 +104,22 @@ CREATE TABLE `fields2book` (
 CREATE TABLE `loans` (
   `C_Id` int(11) NOT NULL,
   `M_id` int(11) NOT NULL,
-  `waiting` tinyint(1) DEFAULT NULL
+  `return_date` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `B_ISBN` varchar(14) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `state` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `loans`
+--
+
+INSERT INTO `loans` (`C_Id`, `M_id`, `return_date`, `B_ISBN`, `state`) VALUES
+(1, 2, '1513029600000', '1-21091-776-6', 'borrow'),
+(2, 3, '1512424800000', '3-49485-696-8', 'borrow'),
+(3, 4, '1483567200000', '8-61901-940-2', 'borrow'),
+(4, 4, '1503867600000', '1-21091-776-6', 'borrow'),
+(5, 2, '1483221600000', '8-61901-940-2', 'borrow'),
+(6, 4, '1513029600000', '1-21091-776-6', 'borrow');
 
 -- --------------------------------------------------------
 
@@ -113,17 +131,19 @@ CREATE TABLE `members` (
   `M_id` int(11) UNSIGNED NOT NULL,
   `M_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `M_role` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `M_stats` int(11) UNSIGNED NOT NULL
+  `M_stats` int(11) UNSIGNED NOT NULL,
+  `code` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(40) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Contenu de la table `members`
 --
 
-INSERT INTO `members` (`M_id`, `M_name`, `M_role`, `M_stats`) VALUES
-(2, 'Gianni', 'Student', 0),
-(3, 'Jean-Didier', 'student', 0),
-(4, 'Alfred Hugo', 'student', 0);
+INSERT INTO `members` (`M_id`, `M_name`, `M_role`, `M_stats`, `code`, `email`) VALUES
+(2, 'Gianni', 'Student', 0, '1002', 'gianni@yahoo.fr'),
+(3, 'Jean-Didier', 'student', 0, '1003', 'jdtotow@yahoo.fr'),
+(4, 'Alfred Hugo', 'student', 0, '1004', 'alfred@yahoo.fr');
 
 -- --------------------------------------------------------
 
@@ -168,6 +188,12 @@ ALTER TABLE `fields`
   ADD PRIMARY KEY (`F_id`);
 
 --
+-- Index pour la table `loans`
+--
+ALTER TABLE `loans`
+  ADD PRIMARY KEY (`C_Id`);
+
+--
 -- Index pour la table `members`
 --
 ALTER TABLE `members`
@@ -187,12 +213,17 @@ ALTER TABLE `operator`
 -- AUTO_INCREMENT pour la table `copies`
 --
 ALTER TABLE `copies`
-  MODIFY `C_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `C_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT pour la table `fields`
 --
 ALTER TABLE `fields`
   MODIFY `F_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT pour la table `loans`
+--
+ALTER TABLE `loans`
+  MODIFY `C_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT pour la table `members`
 --
